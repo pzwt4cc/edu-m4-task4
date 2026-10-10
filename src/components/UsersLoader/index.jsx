@@ -79,24 +79,26 @@ class UsersLoader extends Component {
 
     return (
       <div className={styles.userCard}>
-        <div className={styles.nav}>
-          <select value={genderFilter} onChange={this.genderFilterHandler}>
+        <div className={styles.selectorNavLinks}>
+          <select
+            className={styles.selectorNav}
+            value={genderFilter}
+            onChange={this.genderFilterHandler}
+          >
             <option value="all">All</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
-          <select value={resultCount} onChange={this.resultCountHandler}>
+          <select
+            className={styles.selectorNav}
+            value={resultCount}
+            onChange={this.resultCountHandler}
+          >
             <option value="1">1</option>
             <option value="3">3</option>
             <option value="5">5</option>
             <option value="10">10</option>
           </select>
-          <button className={styles.btnNav} onClick={this.prevPage}>
-            {"<"}
-          </button>
-          <button className={styles.btnNav} onClick={this.nextPage}>
-            {">"}
-          </button>
         </div>
 
         {error && <div>!!!ERROR!!! {JSON.stringify(error)}</div>}
@@ -110,25 +112,43 @@ class UsersLoader extends Component {
                 login: { username, uuid },
                 gender,
               }) => (
-                <li className={styles.userListPerson} key={uuid}>
+                <li
+                  className={classNames(styles.userListPerson, {
+                    [styles.personMale]: gender === "male",
+                    [styles.personFemale]: gender === "female",
+                  })}
+                  key={uuid}
+                >
                   <div className={styles.userName}>
                     {first} {last}
+                    <span
+                      className={classNames(styles.userGender, {
+                        [styles.genderMale]: gender === "male",
+                        [styles.genderFemale]: gender === "female",
+                      })}
+                    >
+                      {gender}
+                    </span>
                   </div>
-                  <div className={styles.userEmail}>{email}</div>
-                  <div className={styles.userNickname}>{username}</div>
-                  <div
-                    className={classNames(styles.userGender, {
-                      [styles.genderMale]: gender === "male",
-                      [styles.genderFemale]: gender === "female",
-                    })}
-                  >
-                    {gender}
+
+                  <div className={styles.userNickname}>
+                    Nickname: {username}
                   </div>
+                  <div className={styles.userEmail}>Email: {email}</div>
                 </li>
               ),
             )}
           </ul>
         )}
+
+        <div className={styles.btnNavLinks}>
+          <button className={styles.btnNav} onClick={this.prevPage}>
+            {"<"}
+          </button>
+          <button className={styles.btnNav} onClick={this.nextPage}>
+            {">"}
+          </button>
+        </div>
       </div>
     );
   }
