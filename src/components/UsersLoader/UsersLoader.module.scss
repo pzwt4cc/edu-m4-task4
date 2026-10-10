@@ -1,0 +1,63 @@
+@import "../../common/style/_variables";
+
+.userCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 3rem auto;
+    padding: 1rem;
+    max-width: 800px;
+    border: 2px solid black;
+    border-radius: $default-border-radius;
+
+    .nav {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btnNav {
+        width: 50px;
+        margin: 0.5rem;
+    }
+
+    .userList {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        overflow-wrap: anywhere;
+    }
+
+    .userListPerson {
+        border: 2px solid black;
+        border-radius: $default-border-radius;
+        margin: 0.5rem;
+        padding: 0.5rem;
+        width: 600px;
+
+        .userName {
+            font-size: 1.2rem;
+        }
+
+        .userEmail {
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        .userNickname {
+            font-size: 1.1rem;
+        }
+
+        .userGender {
+            border: 1px solid red;
+        }
+
+        .genderMale {
+            color: blue;
+        }
+
+        .genderFemale {
+            color: pink;
+        }
+    }
+}

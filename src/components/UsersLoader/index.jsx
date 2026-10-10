@@ -1,5 +1,7 @@
 import { Component } from "react";
+import classNames from "classnames";
 import getUsers from "../../api";
+import styles from "./UsersLoader.module.scss";
 
 class UsersLoader extends Component {
   constructor(props) {
@@ -51,21 +53,47 @@ class UsersLoader extends Component {
     const { users, isFetching, error } = this.state;
 
     return (
-      <>
+      <div className={styles.userCard}>
+        <div className={styles.nav}>
+          <button className={styles.btnNav} onClick={this.prevPage}>
+            {"<"}
+          </button>
+          <button className={styles.btnNav} onClick={this.nextPage}>
+            {">"}
+          </button>
+        </div>
+
         {error && <div>!!!ERROR!!! {JSON.stringify(error)}</div>}
         {isFetching && <div>Loading. Please waite...</div>}
         {!error && !isFetching && (
-          <>
-            <button onClick={this.prevPage}>{"<"}</button>
-            <button onClick={this.nextPage}>{">"}</button>
-            <ul>
-              {users.map((u) => (
-                <li key={u.login.uuid}>{JSON.stringify(u)}</li>
-              ))}
-            </ul>
-          </>
+          <ul className={styles.userList}>
+            {users.map(
+              ({
+                name: { first, last },
+                email,
+                login: { username, uuid },
+                gender,
+              }) => (
+                <li className={styles.userListPerson} key={uuid}>
+                  <div className={styles.userName}>
+                    {first} {last}
+                  </div>
+                  <div className={styles.userEmail}>{email}</div>
+                  <div className={styles.userNickname}>{username}</div>
+                  <div
+                    className={classNames(styles.userGender, {
+                      [styles.genderMale]: gender === "male",
+                      [styles.genderFemale]: gender === "female",
+                    })}
+                  >
+                    {gender}
+                  </div>
+                </li>
+              ),
+            )}
+          </ul>
         )}
-      </>
+      </div>
     );
   }
 }
